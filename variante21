@@ -1,0 +1,195 @@
+#include <iostream>
+using namespace std;
+
+
+class   Matrix
+{
+    int data[3][3];
+
+public:
+    Matrix(int array4[3][3])
+    {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                data[i][j] = array4[i][j];
+                cout << data[i][j] << " ";
+            }
+            cout << endl;
+        }
+        Determinate();
+    }
+    void Determinate()
+    {
+        int determinate = 0;
+        determinate = data[0][0] * data[1][1] * data[2][2] + 
+            data[0][1] * data[1][2] * data[2][0] + 
+            data[0][2] * data[1][0] * data[2][1] - 
+            data[0][2] * data[1][1] * data[2][0] -
+            data[0][1] * data[1][0] * data[2][2] -
+            data[0][0] * data[1][2] * data[2][1];
+        cout << determinate << endl;
+    }
+};
+
+struct MusicAlbum
+{
+    char title[70];
+    char artist[50];
+    int year;
+};
+
+
+void Delete(MusicAlbum albums[],int i)
+{
+    strcpy_s(albums[i].title, sizeof(albums[i].title), "0");
+    strcpy_s(albums[i].artist, sizeof(albums[i].artist), "0");
+    albums[i].year = 0;
+    cout << i << "Альбом удалён" << endl;
+
+}
+void Redactar(MusicAlbum albums[], int i)
+{
+    char name[70];
+    char human[50];
+    int numb;
+
+    cout << "Название альбома: ";
+    cin.ignore(); // Игнорируем предыдущий ввод, чтобы getline работал корректно
+    cin.getline(name, sizeof(name));
+
+    cout << "Артист: ";
+    cin.getline(human, sizeof(human));
+
+    cout << "Год выпуска: ";
+    cin >> numb;
+
+    strcpy_s(albums[i].title, sizeof(albums[i].title), name);
+    strcpy_s(albums[i].artist, sizeof(albums[i].artist), human);
+    albums[i].year = numb;
+}
+void Out(MusicAlbum albums[]) {
+    cout << "Список альбомов:" << endl;
+    for (int i = 0; i < 5; i++) {
+       cout << "Альбом №" << (i + 1) << ": " << albums[i].title << endl;
+       cout << "Артист: " << albums[i].artist << endl;
+       cout << "Год выпуска: " << albums[i].year << endl;
+       cout << endl;
+    }
+}
+
+
+
+
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    ////TASK №1
+    ///*Найдите первый положительный элемент в одномерном массиве и замените все отрицательные элементы на его значение.*/
+
+
+    cout <<"Задча №1. Вариант 21"<< endl;
+    int array1[10] = {-2, -30, -3, -100, 4, -6, 5, - 14, 15, -34};
+    int plus = 0;
+    //вывод исходного массива
+    for (int i = 0; i < size(array1); i++)
+    {
+        cout << array1[i] << " ";
+    }
+    cout << endl;
+    //поиск первого положительного
+    for (int i = 0; i < size(array1); i++)
+    {
+        if (array1[i] > 0)
+        {
+            plus = array1[i];
+            break;
+        }
+    }
+    //замена всех элементов массив на первое положительное
+    for (int i = 0; i < size(array1); i++)
+    {
+        array1[i] = plus;
+        cout << array1[i] << " ";
+    }
+    cout << endl;
+
+    //TASK №2
+    /*Найдите сумму элементов в каждой "плоскости" трехмерного массива.*/
+
+    cout << "Задча №2. Вариант 21" << endl;
+    srand(time(NULL));
+    int sum = 0;
+    const int x = 2;
+    const int y = 3;
+    const int z = 4;
+    int array2[x][y][z];
+    //заполнение кубика рандомными числами и вывод значений
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
+            for (int k = 0; k < z; k++) {
+                array2[i][j][k] = rand() % 100;
+                cout <<array2[i][j][k]<< " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
+    //считаем и выводим сумму плоскости
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
+            for (int k = 0; k < z; k++) {
+                sum += array2[i][j][k];
+            }
+        }
+        cout << sum<<endl;
+        sum = 0;
+    }
+    cout << endl;
+
+    //TASK №3
+    /*Создайте структуру "MusicAlbum" с полями "title" (массив символов), "artist" (массив символов) и "year" (целое число). 
+    Напишите программу на C++, которая хранит информацию об альбомах и позволяет добавлять, удалять и обновлять данные.*/
+
+    cout << "Задча №3. Вариант 21" << endl;
+    int number;
+    MusicAlbum albums[5];
+    int i = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        Redactar(albums, i);
+        cout << endl;
+    }
+    cout << "1 - Удалить" << endl;
+    cout << "2 - Редактировать" << endl;
+    cin >> number;
+    if (number == 1)
+    {
+        cout << "Альбом под каким номером следует удалить (1-5)?" << endl;
+        cin >> i;
+        Delete(albums, i-1);
+        cout << endl;
+        Out(albums);
+    }
+    else
+    {
+        cout << "Альбом под каким номером следует редактировать (1-5)?" << endl;
+        cin >> i;
+        Redactar(albums, i-1);
+        cout << endl;
+        Out(albums);
+    }
+
+
+    //TASK №4
+    /*Создайте класс "Matrix" с приватным полем "data" (многомерный массив) и публичным методом для вычисления определителя.*/
+    cout << "Задча №4. Вариант 21" << endl;
+    int array4[3][3];
+    //заполнение матрицы рандомными числами и вывод значений
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            array4[i][j] = rand() % 100;
+        }
+    }
+    Matrix matrix(array4);
+}
